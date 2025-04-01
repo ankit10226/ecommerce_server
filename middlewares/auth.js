@@ -3,20 +3,17 @@ require('dotenv').config();
 
 module.exports = (req, res, next) => {
   try {
-    const header = req.headers.authorization;
-    if (!header) {
-      res.status(403).json({ message: 'No Token Provided!' });
-    }
-    const token = header.split(' ')[1];
+    const token = req.cookies.token;  
+
     if (!token) {
-      res.status(403).json({ message: 'Invalid Token Format!' });
+      return res.status(403).json({ message: 'No Token Provided!' });
     }
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { userId: decodedToken.userId, email: decodedToken.email };
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { userId: decoded.userId, email: decoded.email, name:decoded.name };
+
     next();
   } catch (error) {
-    response.status(401).json({
-      message: 'Invalid or expired token',
-    });
+    return res.status(401).json({ message: 'Invalid or expired token' });
   }
 };
