@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/User'); 
+require('dotenv').config();
 
 
 exports.register = async (req, res) => { 
@@ -32,12 +33,23 @@ exports.login = async (req, res) => {
     }
     
     const token = jwt.sign(
-      {userId:user._id,email:user.email,},
+      {userId:user._id,email:user.email,name:user.name},
       process.env.JWT_SECRET,
       {expiresIn:'1h'}
     )
-    return res.status(200).json({message:"Login Successful",token,user:{ id: user._id, name: user.name, email: user.email }});
+    return res.status(200).cookie("token", token, { httpOnly: true }).json({message:"Login Successful",user:{ id: user._id, name: user.name, email: user.email }});
   } catch (error) {
     return res.status(500).json({message:error.message})
   }
 };
+
+exports.verifyUser = (req, res) => {
+  res.status(200).json({ user: req.user });
+};
+
+exports.logout = (req,res) =>{
+  return res
+    .status(200)
+    .clearCookie("token", { httpOnly: true, secure: true, sameSite: "None" }) 
+    .json({ message: "Logout successful" });
+}
