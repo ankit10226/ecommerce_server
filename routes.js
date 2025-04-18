@@ -12,7 +12,8 @@ router.get('/verify-user', auth,userController.verifyUser);
 router.post('/logout', auth,userController.logout);
 
 //Admin Routes 
-router.post('/admin/upload/products', uploadImage.single('file'), adminController.uploadProduct);
+router.post('/admin/upload/image', auth, uploadImage.single('file'), adminController.uploadImage);
+router.post('/admin/upload/product', auth, adminController.uploadProduct);
 
 router.get('/home',auth,(req,res)=>{
   const user = req.user;
