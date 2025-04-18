@@ -21,7 +21,6 @@ exports.uploadImage = async (req, res) => {
   }
 };
 
-
 exports.uploadProduct = async (req,res) =>{
   try { 
     const newProduct = new Product({
@@ -36,6 +35,17 @@ exports.uploadProduct = async (req,res) =>{
     return res
       .status(200)
       .json({ message: 'Product saved successfully', product: savedProduct });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+exports.fetchProduct = async (req,res) =>{
+  try {
+    const product = await Product.find();
+    return res
+    .status(200)
+    .json({ message: 'Products fetched successfully', product });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

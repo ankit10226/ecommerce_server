@@ -12,6 +12,7 @@ router.get('/verify-user', auth,userController.verifyUser);
 router.post('/logout', auth,userController.logout);
 
 //Admin Routes 
+router.get('/admin/fetch/product', auth, adminController.fetchProduct);
 router.post('/admin/upload/image', auth, uploadImage.single('file'), adminController.uploadImage);
 router.post('/admin/upload/product', auth, adminController.uploadProduct);
 
