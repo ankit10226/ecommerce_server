@@ -13,8 +13,10 @@ router.post('/logout', auth,userController.logout);
 
 //Admin Routes 
 router.get('/admin/fetch/product', auth, adminController.fetchProduct);
+router.get('/admin/fetch/dashboard', auth, adminController.fetchDashboard);
 router.post('/admin/upload/image', auth, uploadImage.single('file'), adminController.uploadImage);
 router.post('/admin/upload/product', auth, adminController.uploadProduct);
+router.post('/admin/upload/dashboard', auth, adminController.uploadDashboard);
 
 router.get('/home',auth,(req,res)=>{
   const user = req.user;

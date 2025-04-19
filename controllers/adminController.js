@@ -1,3 +1,4 @@
+const Dashboard = require("../models/Dashboard");
 const Product = require("../models/Product");
 
 exports.uploadImage = async (req, res) => {
@@ -40,12 +41,38 @@ exports.uploadProduct = async (req,res) =>{
   }
 }
 
+exports.uploadDashboard = async (req,res) =>{
+  try { 
+    const newDashboard = new Dashboard({
+      category: 'dashboard', 
+      image: req.body.image, 
+    }); 
+    const savedDashboard = await newDashboard.save();
+    return res
+      .status(200)
+      .json({ message: 'Dashboard saved successfully', dashboard: savedDashboard });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
 exports.fetchProduct = async (req,res) =>{
   try {
     const product = await Product.find();
     return res
     .status(200)
     .json({ message: 'Products fetched successfully', product });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+exports.fetchDashboard = async (req,res) =>{
+  try {
+    const dashboard = await Dashboard.find();
+    return res
+    .status(200)
+    .json({ message: 'Dashboards fetched successfully', dashboard });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
