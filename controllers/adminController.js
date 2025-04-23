@@ -23,7 +23,7 @@ exports.uploadImage = async (req, res) => {
 };
 
 exports.uploadProduct = async (req,res) =>{
-  try { 
+  try {  
     const newProduct = new Product({
       category: req.body.category,
       title: req.body.title, 
@@ -38,6 +38,46 @@ exports.uploadProduct = async (req,res) =>{
       .json({ message: 'Product saved successfully', product: savedProduct });
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+}
+
+exports.updateProduct = async (req,res) =>{
+  try {
+    const productId = req.params.id;
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      {
+        $set: {
+          title: req.body.title,
+          price: req.body.price,
+          quantity: req.body.quantity,
+          description: req.body.description,
+          category: req.body.category, 
+        }
+      },
+      { new: true }  
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+exports.deleteProduct = async (req,res) =>{
+  try {
+    const productId = req.params.id;
+    const deleteProduct = await Product.findByIdAndDelete(productId);
+    if (!deleteProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    return res.status(200).json({message: "Product deleted successfully!"})
+  } catch (error) {
+    return res.status(500).json({message: error.message});
   }
 }
 

@@ -17,7 +17,7 @@ const dbConnect = require('./config/dbConnect');
 dbConnect();
 
 app.get('/',(req,res)=>{
-  res.send('eCommerce wesite is running....');
+  res.send('eCommerce website is running....');
 });
 
 app.use('/api',routes); 
