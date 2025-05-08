@@ -6,6 +6,14 @@ const productSchema = new mongoose.Schema(
       type:String,
       required:true, 
     },
+    subCategory:{
+      type:String,
+      required:true, 
+    },
+    brand:{
+      type:String,
+      required:true, 
+    },
     title:{
       type:String,
       required:true,

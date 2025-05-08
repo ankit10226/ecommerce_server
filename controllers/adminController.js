@@ -26,6 +26,8 @@ exports.uploadProduct = async (req,res) =>{
   try {  
     const newProduct = new Product({
       category: req.body.category,
+      subCategory: req.body.subCategory,
+      brand: req.body.brand,
       title: req.body.title, 
       price: req.body.price, 
       quantity: req.body.quantity, 
@@ -53,6 +55,8 @@ exports.updateProduct = async (req,res) =>{
           quantity: req.body.quantity,
           description: req.body.description,
           category: req.body.category, 
+          subCategory: req.body.subCategory, 
+          brand: req.body.brand, 
         }
       },
       { new: true }  
