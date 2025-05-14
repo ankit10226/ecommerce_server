@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('./controllers/userController');
 const adminController = require('./controllers/adminController');
+const shopController = require('./controllers/shopController');
 const auth = require('./middlewares/auth');
 const uploadImage = require('./middlewares/uploadImage');
 
@@ -12,13 +13,16 @@ router.get('/verify-user', auth,userController.verifyUser);
 router.post('/logout', auth,userController.logout);
 
 //Admin Routes 
-router.get('/admin/fetch/product', auth, adminController.fetchProduct);
+router.get('/admin/fetch/products', auth, adminController.fetchProducts);
 router.get('/admin/fetch/dashboard', auth, adminController.fetchDashboard);
 router.post('/admin/upload/image', auth, uploadImage.single('file'), adminController.uploadImage);
 router.post('/admin/upload/product', auth, adminController.uploadProduct);
 router.put('/admin/update/product/:id', auth, adminController.updateProduct);
 router.delete('/admin/delete/product/:id', auth, adminController.deleteProduct);
 router.post('/admin/upload/dashboard', auth, adminController.uploadDashboard);
+
+//Shop Routes
+router.get('/shop/fetch/products', auth, shopController.fetchProducts);
 
 router.get('/home',auth,(req,res)=>{
   const user = req.user;

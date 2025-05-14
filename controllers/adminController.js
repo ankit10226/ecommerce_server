@@ -100,7 +100,7 @@ exports.uploadDashboard = async (req,res) =>{
   }
 }
 
-exports.fetchProduct = async (req,res) =>{
+exports.fetchProducts = async (req,res) =>{
   try {
     const product = await Product.find();
     return res
