@@ -23,6 +23,10 @@ router.post('/admin/upload/dashboard', auth, adminController.uploadDashboard);
 
 //Shop Routes
 router.get('/shop/fetch/products', auth, shopController.fetchProducts);
+router.get('/shop/fetch/address/:id', auth, shopController.fetchAddress);
+router.post('/shop/upload/address', auth, shopController.uploadAddress);
+router.put('/shop/update/address/:id', auth, shopController.updateAddress);
+router.delete('/shop/delete/address/:id', auth, shopController.deleteAddress);
 
 router.get('/home',auth,(req,res)=>{
   const user = req.user;
