@@ -85,6 +85,17 @@ exports.deleteProduct = async (req,res) =>{
   }
 }
 
+exports.fetchProducts = async (req,res) =>{
+  try {
+    const product = await Product.find();
+    return res
+    .status(200)
+    .json({ message: 'Products fetched successfully', product });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
 exports.uploadDashboard = async (req,res) =>{
   try { 
     const newDashboard = new Dashboard({
@@ -100,17 +111,6 @@ exports.uploadDashboard = async (req,res) =>{
   }
 }
 
-exports.fetchProducts = async (req,res) =>{
-  try {
-    const product = await Product.find();
-    return res
-    .status(200)
-    .json({ message: 'Products fetched successfully', product });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
-
 exports.fetchDashboard = async (req,res) =>{
   try {
     const dashboard = await Dashboard.find();
@@ -119,5 +119,18 @@ exports.fetchDashboard = async (req,res) =>{
     .json({ message: 'Dashboards fetched successfully', dashboard });
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+}
+
+exports.deleteDashboard = async (req,res) =>{
+  try {
+    const dashboardId = req.params.id;
+    const deleteDashboard = await Dashboard.findByIdAndDelete(dashboardId);
+    if (!deleteDashboard) {
+      return res.status(404).json({ message: "Dashboard not found" });
+    }
+    return res.status(200).json({message: "Dashboard deleted successfully!"})
+  } catch (error) {
+    return res.status(500).json({message: error.message});
   }
 }

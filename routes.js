@@ -13,13 +13,16 @@ router.get('/verify-user', auth,userController.verifyUser);
 router.post('/logout', auth,userController.logout);
 
 //Admin Routes 
-router.get('/admin/fetch/products', auth, adminController.fetchProducts);
-router.get('/admin/fetch/dashboard', auth, adminController.fetchDashboard);
 router.post('/admin/upload/image', auth, uploadImage.single('file'), adminController.uploadImage);
+
+router.post('/admin/upload/dashboard', auth, adminController.uploadDashboard);
+router.get('/admin/fetch/dashboard', auth, adminController.fetchDashboard);
+router.delete('/admin/delete/dashboard/:id', auth, adminController.deleteDashboard);
+
 router.post('/admin/upload/product', auth, adminController.uploadProduct);
+router.get('/admin/fetch/products', auth, adminController.fetchProducts);
 router.put('/admin/update/product/:id', auth, adminController.updateProduct);
 router.delete('/admin/delete/product/:id', auth, adminController.deleteProduct);
-router.post('/admin/upload/dashboard', auth, adminController.uploadDashboard);
 
 //Shop Routes
 router.get('/shop/fetch/products', auth, shopController.fetchProducts);
