@@ -31,9 +31,12 @@ router.post('/shop/upload/address', auth, shopController.uploadAddress);
 router.put('/shop/update/address/:id', auth, shopController.updateAddress);
 router.delete('/shop/delete/address/:id', auth, shopController.deleteAddress);
 
-router.get('/home',auth,(req,res)=>{
-  const user = req.user;
-  res.status(200).json({user});
-});
+router.get('/shop/fetch/order/:id', auth, shopController.fetchOrder);
+router.get('/shop/fetch/orderDetail/:id', auth, shopController.fetchOrderDetail);
+router.put('/shop/update/orderStatus/:id/:value', auth, shopController.updateOrderStatus);
+router.delete('/shop/delete/order/:id', auth, shopController.deleteOrder);
+
+//Order Routes
+router.post('/user/place-order', auth, shopController.placeOrder);
 
 module.exports = router;
